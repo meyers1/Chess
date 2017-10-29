@@ -10,3 +10,10 @@ C:\Users\eahscs\Documents\GitHub\Chess\Chess\bin\Debug\Chess.pdb
 C:\Users\eahscs\Documents\GitHub\Chess\Chess\obj\Debug\Chess.csprojResolveAssemblyReference.cache
 C:\Users\eahscs\Documents\GitHub\Chess\Chess\obj\Debug\Chess.exe
 C:\Users\eahscs\Documents\GitHub\Chess\Chess\obj\Debug\Chess.pdb
+C:\Users\SUNNY\Documents\GitHub\Chess\Chess\obj\Debug\Chess.csprojResolveAssemblyReference.cache
+C:\Users\SUNNY\Documents\GitHub\Chess\Chess\obj\Debug\Chess.csproj.CoreCompileInputs.cache
+C:\Users\SUNNY\Documents\GitHub\Chess\Chess\obj\Debug\Chess.exe
+C:\Users\SUNNY\Documents\GitHub\Chess\Chess\obj\Debug\Chess.pdb
+C:\Users\SUNNY\Documents\GitHub\Chess\Chess\bin\Debug\Chess.exe.config
+C:\Users\SUNNY\Documents\GitHub\Chess\Chess\bin\Debug\Chess.exe
+C:\Users\SUNNY\Documents\GitHub\Chess\Chess\bin\Debug\Chess.pdb
