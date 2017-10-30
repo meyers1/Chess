@@ -395,40 +395,46 @@ namespace Chess
         {
             int disX = (newX - X), disY = (newY - Y);
             if (Math.Abs(disX) != Math.Abs(disY)) return false;
+            //moving right
             if (disX > 0)
             {
+                //moving down
                 if (disY > 0)
                 {
-                    for (int i = 0; i < disX; i++)
+                    for (int i = 1; i < disX; i++)
                     {
-                        if (Program.board[X + i, Y + i] != null) return false;
+                        if (Program.board[Y + i, X + i] != null) return false;
                     }
                     return true;
                 }
+                //moving up
                 if (disY < 0)
                 {
-                    for (int i = 0; i < disX; i++)
+                    for (int i = 1; i < disX; i++)
                     {
-                        if (Program.board[X + i, Y - i] != null) return false;
+                        if (Program.board[Y - i, X + i] != null) return false;
                     }
                     return true;
                 }
             }
+            //moving left
             if (disX < 0)
             {
+                //moving down
                 if (disY > 0)
                 {
-                    for (int i = 0; i < disX; i++)
+                    for (int i = 1; i < disX; i++)
                     {
-                        if (Program.board[X - i, Y + i] != null) return false;
+                        if (Program.board[Y + i, X - i] != null) return false;
                     }
                     return true;
                 }
+                //moving up
                 if (disY < 0)
                 {
-                    for (int i = 0; i < disX; i++)
+                    for (int i = 1; i < disX; i++)
                     {
-                        if (Program.board[X - i, Y - i] != null) return false;
+                        if (Program.board[Y - i, X - i] != null) return false;
                     }
                     return true;
                 }
@@ -449,6 +455,13 @@ namespace Chess
         {
 
         }
+        public override bool IsValidMove(int X, int Y, int newX, int newY, string Color)
+        {
+            if (Math.Abs(newX - X) > 1 || Math.Abs(newY - Y) > 1) return false;
+            if (X == newX && Y == newY) return false;
+            return true;
+            //need to add a constraint for moving into check
+        }
         public override string Draw()
         {
             if (Color == "WHITE")      return "*K ";
@@ -462,6 +475,10 @@ namespace Chess
         public Queen(int X, int Y, string Color) : base(X, Y, Color)
         {
 
+        }
+        public override bool IsValidMove(int X, int Y, int newX, int newY, string Color)
+        {
+            if ()
         }
         public override string Draw()
         {
