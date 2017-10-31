@@ -478,7 +478,94 @@ namespace Chess
         }
         public override bool IsValidMove(int X, int Y, int newX, int newY, string Color)
         {
-            if ()
+            //move like rook
+            if (X == newX)
+            {
+                if (newY < Y)
+                {
+                    for (int i = Y - 1; i > newY; i--)
+                    {
+                        if (Program.board[i, X] != null) return false;
+                    }
+                    return true;
+                }
+                if (newY > Y)
+                {
+                    for (int i = Y + 1; i < newY; i++)
+                    {
+                        if (Program.board[i, X] != null) return false;
+                    }
+                    return true;
+                }
+                return false;
+            }
+            else if (Y == newY)
+            {
+                if (newX < X)
+                {
+                    for (int i = Y - 1; i > newY; i--)
+                    {
+                        if (Program.board[Y, i] != null) return false;
+                    }
+                    return true;
+                }
+                if (newX > X)
+                {
+                    for (int i = X + 1; i < newX; i++)
+                    {
+                        if (Program.board[Y, i] != null) return false;
+                    }
+                    return true;
+                }
+                return false;
+            }
+            int disX = (newX - X), disY = (newY - Y);
+            if (Math.Abs(disX) != Math.Abs(disY)) return false;
+            //moving right
+            if (disX > 0)
+            {
+                //moving down
+                if (disY > 0)
+                {
+                    for (int i = 1; i < disX; i++)
+                    {
+                        if (Program.board[Y + i, X + i] != null) return false;
+                    }
+                    return true;
+                }
+                //moving up
+                if (disY < 0)
+                {
+                    for (int i = 1; i < disX; i++)
+                    {
+                        if (Program.board[Y - i, X + i] != null) return false;
+                    }
+                    return true;
+                }
+            }
+            //moving left
+            if (disX < 0)
+            {
+                //moving down
+                if (disY > 0)
+                {
+                    for (int i = 1; i < disX; i++)
+                    {
+                        if (Program.board[Y + i, X - i] != null) return false;
+                    }
+                    return true;
+                }
+                //moving up
+                if (disY < 0)
+                {
+                    for (int i = 1; i < disX; i++)
+                    {
+                        if (Program.board[Y - i, X - i] != null) return false;
+                    }
+                    return true;
+                }
+            }
+            return false;
         }
         public override string Draw()
         {
