@@ -401,7 +401,7 @@ namespace Chess
                 //moving down
                 if (disY > 0)
                 {
-                    for (int i = 1; i < disX; i++)
+                    for (int i = 1; i < Math.Abs(disX); i++)
                     {
                         if (Program.board[Y + i, X + i] != null) return false;
                     }
@@ -410,7 +410,7 @@ namespace Chess
                 //moving up
                 if (disY < 0)
                 {
-                    for (int i = 1; i < disX; i++)
+                    for (int i = 1; i < Math.Abs(disX); i++)
                     {
                         if (Program.board[Y - i, X + i] != null) return false;
                     }
@@ -423,7 +423,7 @@ namespace Chess
                 //moving down
                 if (disY > 0)
                 {
-                    for (int i = 1; i < disX; i++)
+                    for (int i = 1; i < Math.Abs(disX); i++)
                     {
                         if (Program.board[Y + i, X - i] != null) return false;
                     }
@@ -432,7 +432,7 @@ namespace Chess
                 //moving up
                 if (disY < 0)
                 {
-                    for (int i = 1; i < disX; i++)
+                    for (int i = 1; i < Math.Abs(disX); i++)
                     {
                         if (Program.board[Y - i, X - i] != null) return false;
                     }
@@ -527,7 +527,7 @@ namespace Chess
                 //moving down
                 if (disY > 0)
                 {
-                    for (int i = 1; i < disX; i++)
+                    for (int i = 1; i < Math.Abs(disX); i++)
                     {
                         if (Program.board[Y + i, X + i] != null) return false;
                     }
@@ -536,7 +536,7 @@ namespace Chess
                 //moving up
                 if (disY < 0)
                 {
-                    for (int i = 1; i < disX; i++)
+                    for (int i = 1; i < Math.Abs(disX); i++)
                     {
                         if (Program.board[Y - i, X + i] != null) return false;
                     }
@@ -549,7 +549,7 @@ namespace Chess
                 //moving down
                 if (disY > 0)
                 {
-                    for (int i = 1; i < disX; i++)
+                    for (int i = 1; i < Math.Abs(disX); i++)
                     {
                         if (Program.board[Y + i, X - i] != null) return false;
                     }
@@ -558,7 +558,7 @@ namespace Chess
                 //moving up
                 if (disY < 0)
                 {
-                    for (int i = 1; i < disX; i++)
+                    for (int i = 1; i < Math.Abs(disX); i++)
                     {
                         if (Program.board[Y - i, X - i] != null) return false;
                     }
