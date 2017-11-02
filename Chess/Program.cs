@@ -11,6 +11,7 @@ namespace Chess
         public static Piece[,] board = new Piece[8, 8];
         public static string turn = "WHITE";
         public static List<Piece> takenWhite = new List<Piece>(), takenBlack = new List<Piece>();
+        public static bool gameOver = false;
 
         static void Main(string[] args)
         {
@@ -18,7 +19,6 @@ namespace Chess
 
             //example input: "B2F6
             string input = "";
-            bool gameOver = false;
             bool valid = false;
             while(!gameOver)
             {
@@ -38,15 +38,18 @@ namespace Chess
                         Console.WriteLine("INVALID INPUT");
                     }
                 } while (!valid);
+                DrawCheck(20, 1);
                 EndTurn();
-                //Console.WriteLine(IsValidInput(input));
             }
+            DrawBoard();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            WriteAt("GAME OVER", 20, 1);
         }
 
         public static void DrawBoard()
         {
             Console.Clear();
-            Console.Write("       ---------------------------------");
+            Console.Write("\n\n       ---------------------------------");
             for (int i = 0; i < 8; i++)
             {
                 Console.Write("\n    " + (8 - i) + "  |");
@@ -72,8 +75,38 @@ namespace Chess
             }
             Console.WriteLine("         a   b   c   d   e   f   g   h  ");
 
-            DrawTaken(43, 0);
+            DrawTaken(43, 2);
             Console.SetCursorPosition(0, 20);
+        }
+
+        public static bool InCheck(string color)
+        {
+            //find position of the king
+            string c = "WHITE";
+            Piece k = null;
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (board[i, j] != null && board[i, j].Color == color && board[i, j] is King)
+                    {
+                        k = board[i, j];
+                    }
+                }
+            }
+            //check if the king is in check
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    Piece p = board[i, j];
+                    if (p == null) break;
+                    if (p.Color == color) break;
+                    if (color == "WHITE") c = "BLACK";
+                    if (p.IsValidMove(p.X, p.Y, k.X, k.Y, c)) return true;
+                }
+            }
+            return false;
         }
 
         protected static void WriteAt(string s, int x, int y)
@@ -93,6 +126,18 @@ namespace Chess
             for (int i = 0; i < takenWhite.Count; i++)
             {
                 WriteAt(takenWhite[i].Draw(), (posX + 7), (posY + i + 2));
+            }
+        }
+
+        public static void DrawCheck(int posX, int posY)
+        {
+            if (InCheck("WHITE"))
+            {
+                WriteAt("WHITE IS IN CHECK", posX, posY);
+            }
+            if (InCheck("BLACK"))
+            {
+                WriteAt("BLACK IS IN CHECK", posX, posY);
             }
         }
 
@@ -129,6 +174,9 @@ namespace Chess
             //checks if the piece being moved is allowed to be moved in that way
             if (!(board[Y1, X1].IsValidMove(X1, Y1, X2, Y2, turn))) return false;
 
+            //checks if the piece(if it's a king) is in check
+            if (board[Y1, X1] is King && InCheck(turn)) return false;
+
             return true;
         }
 
@@ -151,9 +199,12 @@ namespace Chess
                     takenBlack.Add(board[Y2, X2]);
                 }
             }
+            if (board[Y1, X1] is King) gameOver = true;
             board[Y1, X1].HasMoved = true;
             board[Y2, X2] = board[Y1, X1];
             board[Y1, X1] = null;
+            board[Y2, X2].X = X2;
+            board[Y2, X2].Y = Y2;
         }
 
         public static void SetupBoard()
@@ -227,7 +278,6 @@ namespace Chess
             board[n2B.Y, n2B.X] = n2B;
             board[r2B.Y, r2B.X] = r2B;
         }
-
     }
 
     class Piece
