@@ -8,7 +8,7 @@ namespace Chess
 {
     class Program
     {
-        public static Piece[,] board = new Piece[8, 8];
+        public static Piece[,] board, newBoard = new Piece[8, 8];
         public static string turn = "WHITE";
         public static List<Piece> takenWhite = new List<Piece>(), takenBlack = new List<Piece>();
         public static bool gameOver = false;
@@ -35,10 +35,11 @@ namespace Chess
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine("INVALID INPUT");
+                        Console.ForegroundColor = ConsoleColor.White;
                     }
                 } while (!valid);
-                DrawCheck(20, 1);
                 EndTurn();
             }
             DrawBoard();
@@ -75,6 +76,7 @@ namespace Chess
             }
             Console.WriteLine("         a   b   c   d   e   f   g   h  ");
 
+            DrawCheck(20, 1);
             DrawTaken(43, 2);
             Console.SetCursorPosition(0, 20);
         }
@@ -83,6 +85,7 @@ namespace Chess
         {
             //find position of the king
             string c = "WHITE";
+            if (color == "WHITE") c = "BLACK";
             Piece k = null;
             for (int i = 0; i < 8; i++)
             {
@@ -100,13 +103,16 @@ namespace Chess
                 for (int j = 0; j < 8; j++)
                 {
                     Piece p = board[i, j];
-                    if (p == null) break;
-                    if (p.Color == color) break;
-                    if (color == "WHITE") c = "BLACK";
-                    if (p.IsValidMove(p.X, p.Y, k.X, k.Y, c)) return true;
+                    if (p != null && p.Color != color && p.IsValidMove(p.X, p.Y, k.X, k.Y, c)) return true;
                 }
             }
             return false;
+        }
+
+        public static bool MoveInCheck(string color)
+        {
+            
+
         }
 
         protected static void WriteAt(string s, int x, int y)
@@ -133,11 +139,22 @@ namespace Chess
         {
             if (InCheck("WHITE"))
             {
-                WriteAt("WHITE IS IN CHECK", posX, posY);
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                if (InCheckMate("WHITE"))
+                {
+                    WriteAt("WHITE IS IN CHECKMATE", posX, posY);
+                }
+                else
+                {
+                    WriteAt("WHITE IS IN CHECK", posX, posY);
+                }
+                Console.ForegroundColor = ConsoleColor.White;
             }
             if (InCheck("BLACK"))
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 WriteAt("BLACK IS IN CHECK", posX, posY);
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
 
@@ -199,7 +216,7 @@ namespace Chess
                     takenBlack.Add(board[Y2, X2]);
                 }
             }
-            if (board[Y1, X1] is King) gameOver = true;
+            //if (board[Y2, X2] is King) gameOver = true;
             board[Y1, X1].HasMoved = true;
             board[Y2, X2] = board[Y1, X1];
             board[Y1, X1] = null;
